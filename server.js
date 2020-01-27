@@ -40,7 +40,7 @@ function runSearch() {
                 "Add Employee",
                 //"Update Employee Manager"
                 //"Update Employee Manager"
-                //"Update Employee Role",
+                "Update Employee Role",
                 //"Update Employee Manager"
             ]
         })
@@ -67,10 +67,9 @@ function runSearch() {
                 case "Add Employee":
                     addEmp();
                     break;
-
-                    // case "Find artists with a top song and top album in the same year":
-                    //     songAndAlbumSearch();
-                    //     break;
+                case "Update Employee Role":
+                    UpEmpRole();
+                    break;
             }
         });
 }
@@ -263,6 +262,68 @@ function addEmp() {
     })
 }
 
+function UpEmpRole() {
+    connection.query("SELECT id, first_name, last_name FROM employee", function(err, result) {
+        if (err) throw err;
+        const employeeName = [];
+        for (let i = 0; i < result.length; i++) {
+            const choices = (result[i].first_name + " " + result[i].last_name);
+            employeeName.push(choices);
+        }
+        inquirer.prompt([{
+                    name: "employee",
+                    type: "list",
+                    message: "Which employee would you like to update?",
+                    choices: employeeName
+                },
+                {
+                    name: "newTitle",
+                    type: "list",
+                    message: "What is the employee's new role?",
+                    choices: ["Sales Lead",
+                        "Salesperson",
+                        "Lead Engineer",
+                        "Software Engineer",
+                        "Accountant",
+                        "Legal Team Lead",
+                        "Lawyer",
+                        "Lead Engineer"
+                    ]
+                }
+            ])
+            .then(function(answer) {
+                const employeeName = answer.employee;
+                if (answer.newTitle === "Sales Lead") {
+                    var roleID = "1";
+                } else if (answer.newTitle === "Salesperson") {
+                    var roleID = "2";
+                } else if (answer.newTitle === "Lead Engineer") {
+                    var roleID = "3";
+                } else if (answer.newTitle === "Software Engineer") {
+                    var roleID = "4";
+                } else if (answer.newTitle === "Accountant") {
+                    var roleID = "5";
+                } else if (answer.newTitle === "Legal Team Lead") {
+                    var roleID = "6";
+                } else if (answer.newTitle === "Lawyer") {
+                    var roleID = "7";
+                } else if (answer.newTitle === "Lead Engineer") {
+                    var roleID = "8";
+                }
+                connection.query(`UPDATE employee SET ? WHERE ?`, [{
+                            role_id: answer.roleID
+                        },
+                        {
+                            id: chosenItem.id
+                        }
+                    ],
+                    function(err, ) {
+                        if (err) throw err;
+
+                    })
+            })
+    })
+}
 // function ViewEmpByMan() {
 //     inquirer.prompt({
 //             name: "manager",
