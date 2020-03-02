@@ -11,3 +11,5 @@ INSERT INTO was the SQL command here. It utilized the syntax we learned in class
 
 ## Issues
 If I had more time I'd update the AddRole function to where the departments are constantly updated whenever a new one is added as opposed to manually writing them. I played around with it and know it requires a for loop but couldnt exactly nail it
+
+![EmpTracker](employee-tracker.gif)
